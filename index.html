@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikael Bhutta | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg:#fdfcfa;--bg-alt:#f8f7f4;--bg-dark:#1a1a2e;--bg-code:#0d1117;--text:#1c1c1c;--text-light:#6b6b6b;--accent:#1a365d;--gold:#b8860b;--border:#e5e2dc;--green:#2f855a;--red:#c53030;--blue:#2b6cb0; }
+        * { margin:0;padding:0;box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;font-size:15px; }
+        .container { max-width:900px;margin:0 auto;padding:0 32px; }
+        
+        header { padding:24px 0;border-bottom:1px solid var(--border); }
+        header .container { display:flex;justify-content:space-between;align-items:center; }
+        .logo { font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--accent); }
+        nav a { color:var(--text-light);text-decoration:none;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-left:28px; }
+        
+        .hero { padding:80px 0;text-align:center;border-bottom:1px solid var(--border); }
+        .hero-eyebrow { font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px; }
+        h1 { font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:400;color:var(--accent);margin-bottom:20px;line-height:1.2; }
+        .hero p { font-size:17px;color:var(--text-light);max-width:600px;margin:0 auto; }
+        
+        section { padding:60px 0; }
+        h2 { font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--accent);margin-bottom:8px;text-align:center; }
+        .section-line { width:60px;height:2px;background:var(--gold);margin:0 auto 40px; }
+        
+        /* TABS */
+        .tab-nav { display:flex;justify-content:center;gap:8px;margin-bottom:48px;flex-wrap:wrap; }
+        .tab-btn { padding:14px 32px;border:2px solid var(--border);background:white;font-size:13px;font-weight:600;cursor:pointer;border-radius:6px;transition:all 0.3s;color:var(--text-light); }
+        .tab-btn:hover { border-color:var(--accent);color:var(--accent); }
+        .tab-btn.active { background:var(--accent);color:white;border-color:var(--accent); }
+        
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+        
+        /* =========================== CODE PROJECTS =========================== */
+        .slide { background:white;border:1px solid var(--border);border-radius:12px;padding:48px;margin-bottom:40px; }
+        .slide-number { font-size:11px;font-weight:600;color:var(--gold);letter-spacing:0.15em;margin-bottom:16px; }
+        .slide h3 { font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--accent);margin-bottom:24px; }
+        .slide h4 { font-size:16px;font-weight:600;color:var(--accent);margin:32px 0 16px;padding-top:24px;border-top:1px solid var(--border); }
+        .slide h4:first-of-type { border-top:none;padding-top:0;margin-top:0; }
+        .slide p { margin-bottom:16px; }
+        .slide ul { margin-left:20px;margin-bottom:16px; }
+        .slide li { margin-bottom:8px; }
+        
+        .highlight-box { background:var(--bg-alt);border-left:4px solid var(--gold);padding:20px 24px;margin:24px 0;border-radius:0 8px 8px 0; }
+        .highlight-box strong { color:var(--accent); }
+        
+        .code-block { background:var(--bg-code);border-radius:8px;padding:20px;margin:20px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:#e6edf3;overflow-x:auto;line-height:1.6; }
+        .code-block .c { color:#8b949e; }
+        .code-block .k { color:#ff7b72; }
+        .code-block .s { color:#a5d6ff; }
+        .code-block .f { color:#d2a8ff; }
+        .code-block .n { color:#79c0ff; }
+        
+        .results-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0; }
+        .result-card { background:var(--bg-alt);padding:20px;border-radius:8px;text-align:center; }
+        .result-label { font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:0.05em; }
+        .result-value { font-size:28px;font-weight:600;color:var(--accent);margin-top:8px; }
+        .result-value.green { color:var(--green); }
+        .result-value.red { color:var(--red); }
+        
+        .insight-box { background:linear-gradient(135deg,var(--accent),#2c5282);color:white;padding:28px;border-radius:8px;margin-top:32px; }
+        .insight-box h5 { font-size:12px;font-weight:600;margin-bottom:12px;opacity:0.8;text-transform:uppercase;letter-spacing:0.1em; }
+        .insight-box p { font-size:15px;line-height:1.8; }
+        
+        .github-btn { display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:white;text-decoration:none;font-size:13px;font-weight:500;border-radius:6px;margin-top:24px; }
+        
+        /* =========================== STOCK ANALYSIS =========================== */
+        .report-header { background:linear-gradient(135deg,var(--accent),#2c5282);color:white;padding:40px;border-radius:12px;margin-bottom:32px; }
+        .report-ticker { font-size:14px;font-weight:600;background:rgba(255,255,255,0.2);padding:6px 14px;border-radius:4px;display:inline-block;margin-bottom:12px; }
+        .report-company { font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;margin-bottom:8px; }
+        .report-sector { font-size:15px;opacity:0.8;margin-bottom:24px; }
+        .report-prices { display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px; }
+        .current-price { font-size:48px;font-weight:300; }
+        .price-meta { text-align:right; }
+        .price-change { font-size:18px;margin-bottom:4px; }
+        .target-badge { background:rgba(255,255,255,0.2);padding:8px 16px;border-radius:6px;font-size:14px; }
+        
+        .report-tabs { display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:16px;flex-wrap:wrap; }
+        .report-tab { padding:10px 20px;border:none;background:transparent;font-size:13px;font-weight:500;cursor:pointer;color:var(--text-light);border-radius:6px;transition:all 0.2s; }
+        .report-tab:hover { background:var(--bg-alt);color:var(--text); }
+        .report-tab.active { background:var(--bg-alt);color:var(--accent);font-weight:600; }
+        
+        .report-panel { display:none; }
+        .report-panel.active { display:block; }
+        
+        .thesis-box { background:var(--bg-alt);padding:28px;border-radius:8px;margin-bottom:28px; }
+        .thesis-headline { font-size:18px;font-weight:600;color:var(--accent);margin-bottom:20px;line-height:1.5; }
+        .thesis-point { display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border); }
+        .thesis-point:last-child { border-bottom:none; }
+        .thesis-num { font-size:20px;font-weight:700;color:var(--gold);min-width:30px; }
+        .thesis-content strong { color:var(--accent); }
+        
+        .metrics-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin:28px 0; }
+        .metric-card { background:white;border:1px solid var(--border);padding:24px;border-radius:8px; }
+        .metric-label { font-size:12px;color:var(--text-light);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px; }
+        .metric-value { font-size:32px;font-weight:600;color:var(--accent); }
+        .metric-note { font-size:13px;color:var(--text-light);margin-top:8px; }
+        .metric-note.green { color:var(--green); }
+        
+        .catalyst-item { display:flex;gap:24px;padding:20px 0;border-bottom:1px solid var(--border); }
+        .catalyst-item:last-child { border-bottom:none; }
+        .catalyst-date { min-width:100px; }
+        .catalyst-date-main { font-weight:600;color:var(--accent); }
+        .catalyst-date-sub { font-size:12px;color:var(--text-light); }
+        .catalyst-content h5 { font-size:15px;font-weight:600;margin-bottom:6px; }
+        .catalyst-content p { font-size:14px;color:var(--text-light); }
+        
+        .risk-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:24px 0; }
+        .risk-item { background:rgba(197,48,48,0.05);border-left:3px solid var(--red);padding:16px; }
+        .risk-item h5 { font-size:14px;font-weight:600;color:var(--red);margin-bottom:8px; }
+        .risk-item p { font-size:13px;color:var(--text-light); }
+        
+        .bottom-line { background:var(--accent);color:white;padding:32px;border-radius:8px;margin-top:32px; }
+        .bottom-line h4 { font-size:14px;font-weight:600;margin-bottom:16px;opacity:0.8;text-transform:uppercase;letter-spacing:0.1em; }
+        .bottom-line p { font-size:16px;line-height:1.8; }
+        
+        /* =========================== SHIPPING =========================== */
+        .shipping-hero { background:linear-gradient(135deg,var(--bg-dark),#2d3748);color:white;padding:48px;border-radius:12px;margin-bottom:40px;text-align:center; }
+        .shipping-hero h3 { font-family:'Cormorant Garamond',serif;font-size:32px;color:white;margin-bottom:12px; }
+        .shipping-hero p { font-size:16px;opacity:0.8;max-width:600px;margin:0 auto 20px; }
+        .shipping-date { color:var(--gold);font-size:12px;letter-spacing:0.15em; }
+        
+        .narrative { background:var(--bg-alt);padding:32px;border-radius:8px;margin-bottom:40px; }
+        .narrative h4 { font-size:18px;font-weight:600;color:var(--accent);margin-bottom:16px; }
+        .narrative p { margin-bottom:16px; }
+        .narrative p:last-child { margin-bottom:0; }
+        
+        .rate-table { width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;margin-bottom:40px; }
+        .rate-table th { background:var(--bg-alt);padding:14px 20px;text-align:left;font-size:12px;font-weight:600;color:var(--text-light);text-transform:uppercase; }
+        .rate-table td { padding:16px 20px;border-bottom:1px solid var(--border); }
+        .rate-table tr:last-child td { border-bottom:none; }
+        .rate-name { font-weight:500; }
+        .rate-size { font-size:12px;color:var(--text-light); }
+        .rate-value { font-family:'JetBrains Mono',monospace;font-weight:600; }
+        .rate-change.up { color:var(--green); }
+        .rate-change.down { color:var(--red); }
+        
+        .picks-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:32px; }
+        .pick-card { background:white;border:1px solid var(--border);border-radius:12px;padding:28px; }
+        .pick-header { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px; }
+        .pick-ticker { font-size:20px;font-weight:700;color:var(--accent); }
+        .pick-name { font-size:14px;color:var(--text-light);margin-top:4px; }
+        .pick-rating { background:var(--green);color:white;padding:6px 12px;border-radius:4px;font-size:11px;font-weight:600; }
+        .pick-prices { display:flex;gap:24px;margin-bottom:16px; }
+        .pick-price-label { font-size:11px;color:var(--text-light);text-transform:uppercase; }
+        .pick-price-value { font-size:24px;font-weight:600;color:var(--accent); }
+        .pick-price-value.target { color:var(--green); }
+        .pick-upside { font-size:14px;color:var(--green);font-weight:500;margin-bottom:16px; }
+        .pick-thesis { font-size:14px;color:var(--text-light);line-height:1.7;padding-top:16px;border-top:1px solid var(--border); }
+        
+        /* SKILLS & CONTACT */
+        .skills-section { background:var(--bg-alt);border-top:1px solid var(--border); }
+        .skills-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:40px; }
+        .skill-group h4 { font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:16px; }
+        .skill-group li { font-size:14px;padding:6px 0;list-style:none; }
+        
+        .contact { text-align:center;padding:80px 0; }
+        .contact-links { display:flex;justify-content:center;gap:16px;margin-top:32px; }
+        .contact-link { padding:14px 28px;text-decoration:none;font-size:13px;font-weight:500;border-radius:8px; }
+        .contact-link.primary { background:var(--accent);color:white; }
+        .contact-link.secondary { background:white;color:var(--text);border:1px solid var(--border); }
+        
+        footer { border-top:1px solid var(--border);padding:32px 0;text-align:center; }
+        footer p { font-size:13px;color:var(--text-light); }
+        
+        @media (max-width:768px) {
+            .skills-grid,.metrics-grid,.picks-grid,.risk-grid,.results-grid { grid-template-columns:1fr; }
+            .report-prices { flex-direction:column;align-items:flex-start; }
+            .price-meta { text-align:left; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">Mikael Bhutta</div>
+        <nav><a href="#portfolio">Portfolio</a><a href="#skills">Skills</a><a href="#contact">Contact</a></nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-eyebrow">Quantitative Finance & Analytics</div>
+        <h1>Building systematic tools for financial markets</h1>
+        <p>Mathematics & Economics student at University of Oslo, on exchange at NTU Singapore. Focused on quantitative research, systematic trading, and shipping/commodity markets.</p>
+    </div>
+</section>
+
+<section id="portfolio">
+    <div class="container">
+        <h2>Portfolio</h2>
+        <div class="section-line"></div>
+        
+        <div class="tab-nav">
+            <button class="tab-btn active" id="tab-code" onclick="showTab('code', this)">Code Projects</button>
+            <button class="tab-btn" id="tab-stocks" onclick="showTab('stocks', this)">Stock Analysis</button>
+            <button class="tab-btn" id="tab-shipping" onclick="showTab('shipping', this)">Shipping Market</button>
+        </div>
+        
+        <!-- =========================== CODE PROJECTS =========================== -->
+        <div id="code-content" class="tab-content active">
+            
+            <!-- SLIDE 1: ML Project -->
+            <div class="slide">
+                <div class="slide-number">PROJECT 01 — MACHINE LEARNING</div>
+                <h3>Can Machine Learning Predict Currency Movements?</h3>
+                
+                <h4>The Research Question</h4>
+                <p>Foreign exchange markets are notoriously difficult to predict. The famous Meese-Rogoff puzzle (1983) showed that even sophisticated economic models couldn't beat a naive "random walk" forecast. But what if we reframe this as a <strong>classification problem</strong> instead of a regression problem?</p>
+                
+                <div class="highlight-box">
+                    <strong>Hypothesis:</strong> By predicting only the <em>direction</em> of daily EUR/USD returns (up or down) rather than the exact magnitude, we can achieve accuracy significantly above 50% and build a profitable trading strategy.
+                </div>
+                
+                <h4>Methodology</h4>
+                <p>I tested multiple ML classification algorithms against 5 years of EUR/USD daily data (2019-2024):</p>
+                <ul>
+                    <li><strong>Features:</strong> Lagged returns (1, 5, 20 days), RSI(14), MACD signal, Bollinger Band %B, moving average crossovers</li>
+                    <li><strong>Models:</strong> Logistic Regression, Random Forest, Gradient Boosting (XGBoost), Neural Network (MLP)</li>
+                    <li><strong>Validation:</strong> Walk-forward analysis — train on 250 days, test on next 20 days, roll forward</li>
+                    <li><strong>Benchmark:</strong> Random prediction (50% accuracy)</li>
+                </ul>
+                
+                <h4>Implementation</h4>
+                <div class="code-block"><span class="c"># Walk-forward validation with MLP classifier</span>
+<span class="k">from</span> sklearn.neural_network <span class="k">import</span> MLPClassifier
+<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> StandardScaler
+
+<span class="c"># Target: 1 if next day return > 0, else 0</span>
+y = (df[<span class="s">'close'</span>].shift(-<span class="n">1</span>) > df[<span class="s">'close'</span>]).astype(<span class="n">int</span>)
+
+<span class="c"># Walk-forward: train on 250 days, predict next 20</span>
+<span class="k">for</span> start <span class="k">in</span> <span class="f">range</span>(<span class="n">0</span>, <span class="f">len</span>(df) - <span class="n">270</span>, <span class="n">20</span>):
+    train_idx = <span class="f">slice</span>(start, start + <span class="n">250</span>)
+    test_idx = <span class="f">slice</span>(start + <span class="n">250</span>, start + <span class="n">270</span>)
+    
+    X_train = scaler.<span class="f">fit_transform</span>(df[features].iloc[train_idx])
+    model = <span class="f">MLPClassifier</span>(hidden_layer_sizes=(<span class="n">32</span>, <span class="n">16</span>), max_iter=<span class="n">500</span>)
+    model.<span class="f">fit</span>(X_train, y.iloc[train_idx])
+    
+    predictions.<span class="f">extend</span>(model.<span class="f">predict</span>(X_test))</div>
+                
+                <h4>Results</h4>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Direction Accuracy</div>
+                        <div class="result-value green">54.7%</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Sharpe Ratio</div>
+                        <div class="result-value">0.89</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Max Drawdown</div>
+                        <div class="result-value red">-12.3%</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Annual Return</div>
+                        <div class="result-value green">+6.2%</div>
+                    </div>
+                </div>
+                
+                <div class="insight-box">
+                    <h5>Key Insights</h5>
+                    <p><strong>54.7% accuracy is statistically significant</strong> — a binomial test confirms this beats random chance (p < 0.05). The neural network outperformed linear models by ~2%, suggesting non-linear patterns exist in the data. However, <strong>the edge is thin</strong> — transaction costs above 3bps per trade eliminate profitability. The model also degraded during high-volatility periods (March 2020: accuracy dropped to ~51%). This isn't a trading system — it's proof that small edges exist, but capturing them in practice is another challenge entirely.</p>
+                </div>
+                
+                <a href="https://github.com/mikemode04/Machine-learning" class="github-btn" target="_blank">View Full Code on GitHub →</a>
+            </div>
+            
+            <!-- SLIDE 2: Quant Finance Lab -->
+            <div class="slide">
+                <div class="slide-number">PROJECT 02 — FACTOR MODELS</div>
+                <h3>Building a Factor Attribution Framework</h3>
+                
+                <h4>The Problem</h4>
+                <p>When a portfolio outperforms the market, is it <em>alpha</em> (genuine skill) or just factor exposure (loading up on risky small-caps or value stocks)? Academic factor models like Fama-French decompose returns, but implementing them correctly requires careful attention to data alignment, look-ahead bias, and time-varying factor loadings.</p>
+                
+                <div class="highlight-box">
+                    <strong>Goal:</strong> Build a clean Python framework that takes any portfolio's returns and decomposes them into market, size (SMB), value (HML), and momentum contributions — with rolling betas to capture how exposures change over time.
+                </div>
+                
+                <h4>What I Built</h4>
+                <ul>
+                    <li><strong>Data Pipeline:</strong> Automated ingestion from Kenneth French's data library + Yahoo Finance</li>
+                    <li><strong>Rolling Regression:</strong> 252-day rolling OLS with Newey-West standard errors for robust inference</li>
+                    <li><strong>Visualization:</strong> Time-series plots of factor loadings to see when betas shift</li>
+                </ul>
+                
+                <h4>Implementation</h4>
+                <div class="code-block"><span class="c"># Rolling factor attribution with Newey-West standard errors</span>
+<span class="k">from</span> statsmodels.regression.rolling <span class="k">import</span> RollingOLS
+
+<span class="k">def</span> <span class="f">factor_attribution</span>(portfolio_returns, factors, window=<span class="n">252</span>):
+    <span class="s">"""
+    Decompose portfolio returns into factor contributions.
+    Returns rolling alpha and factor betas over time.
+    """</span>
+    X = sm.<span class="f">add_constant</span>(factors[[<span class="s">'MKT-RF'</span>, <span class="s">'SMB'</span>, <span class="s">'HML'</span>]])
+    
+    model = <span class="f">RollingOLS</span>(portfolio_returns, X, window=window)
+    results = model.<span class="f">fit</span>()
+    
+    <span class="c"># Annualize alpha (daily → yearly)</span>
+    alpha_annualized = results.params[<span class="s">'const'</span>] * <span class="n">252</span>
+    
+    <span class="k">return</span> {
+        <span class="s">'alpha'</span>: alpha_annualized,
+        <span class="s">'market_beta'</span>: results.params[<span class="s">'MKT-RF'</span>],
+        <span class="s">'size_beta'</span>: results.params[<span class="s">'SMB'</span>],
+        <span class="s">'value_beta'</span>: results.params[<span class="s">'HML'</span>],
+        <span class="s">'r_squared'</span>: results.rsquared
+    }</div>
+                
+                <h4>Sample Output: Tech Portfolio Attribution</h4>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Annualized Alpha</div>
+                        <div class="result-value green">+2.8%</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Market Beta</div>
+                        <div class="result-value">1.24</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Size Loading (SMB)</div>
+                        <div class="result-value">-0.18</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">R-Squared</div>
+                        <div class="result-value">0.82</div>
+                    </div>
+                </div>
+                
+                <div class="insight-box">
+                    <h5>Key Insights</h5>
+                    <p><strong>Market beta of 1.24</strong> means this portfolio amplifies market moves by 24% — great in bull markets, painful in drawdowns. The <strong>negative SMB loading (-0.18)</strong> indicates a large-cap tilt, which makes sense for a tech portfolio dominated by FAANG. The <strong>2.8% alpha</strong> is encouraging, but when I add the momentum factor (Carhart 4-factor model), most of it disappears — suggesting the "alpha" was really just momentum exposure in disguise.</p>
+                </div>
+                
+                <a href="https://github.com/mikemode04/quant-finance-lab" class="github-btn" target="_blank">View Full Code on GitHub →</a>
+            </div>
+            
+            <!-- SLIDE 3: SQL Pipeline -->
+            <div class="slide">
+                <div class="slide-number">PROJECT 03 — DATA ENGINEERING</div>
+                <h3>Macro Data Pipeline with SQL & FRED API</h3>
+                
+                <h4>The Problem</h4>
+                <p>Macro trading strategies require clean, consistent data across dozens of economic indicators. Manually downloading CSVs from FRED is tedious, error-prone, and doesn't handle revisions properly (GDP estimates change!). I needed an automated pipeline that updates daily and tracks historical revisions for point-in-time accuracy.</p>
+                
+                <h4>Solution Architecture</h4>
+                <ul>
+                    <li><strong>Ingestion:</strong> Python script pulls data from FRED API on schedule</li>
+                    <li><strong>Storage:</strong> PostgreSQL database with separate tables for each indicator</li>
+                    <li><strong>Views:</strong> SQL views combine indicators and generate trading signals</li>
+                </ul>
+                
+                <div class="code-block"><span class="c">-- Unified macro dashboard with derived signals</span>
+<span class="k">CREATE VIEW</span> macro_signals <span class="k">AS</span>
+<span class="k">SELECT</span> 
+    date,
+    gdp_growth_yoy,
+    cpi_yoy,
+    unemployment_rate,
+    fed_funds_rate,
+    yield_10y - yield_2y <span class="k">AS</span> yield_spread,
+    <span class="c">-- Yield curve inversion = recession warning</span>
+    <span class="k">CASE WHEN</span> yield_10y - yield_2y < <span class="n">0</span> 
+        <span class="k">THEN</span> <span class="s">'INVERTED'</span> 
+        <span class="k">ELSE</span> <span class="s">'NORMAL'</span> 
+    <span class="k">END AS</span> yield_curve_signal,
+    <span class="c">-- LEI momentum for cycle timing</span>
+    <span class="k">CASE WHEN</span> lei_3m_change > <span class="n">0</span> 
+        <span class="k">THEN</span> <span class="s">'EXPANSION'</span> 
+        <span class="k">ELSE</span> <span class="s">'CONTRACTION'</span> 
+    <span class="k">END AS</span> lei_signal
+<span class="k">FROM</span> economic_indicators
+<span class="k">ORDER BY</span> date <span class="k">DESC</span>;</div>
+                
+                <div class="insight-box">
+                    <h5>What This Enables</h5>
+                    <p><strong>Real-time regime detection:</strong> One query tells me if the yield curve is inverted and where we are in the business cycle. <strong>Point-in-time backtesting:</strong> By tracking when GDP/CPI estimates were revised, I can backtest strategies using only information available at the time — avoiding look-ahead bias. <strong>20+ years of history:</strong> The full database covers 2000-present for all major US macro indicators.</p>
+                </div>
+                
+                <a href="https://github.com/mikemode04/SQL-pipeline" class="github-btn" target="_blank">View Full Code on GitHub →</a>
+            </div>
+            
+        </div>
+        
+        <!-- =========================== STOCK ANALYSIS =========================== -->
+        <div id="stocks-content" class="tab-content">
+            
+            <!-- XVIVO REPORT -->
+            <div class="report-header">
+                <div class="report-ticker">XVIVO · OMX Stockholm</div>
+                <div class="report-company">XVIVO Perfusion AB</div>
+                <div class="report-sector">Healthcare — Medical Technology — Organ Transplant</div>
+                <div class="report-prices">
+                    <div class="current-price">SEK 277</div>
+                    <div class="price-meta">
+                        <div class="price-change">+9.6 (+3.59%) today</div>
+                        <div class="target-badge">Target SEK 320 (+16% upside)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-tabs">
+                <button class="report-tab active" onclick="showPanel('xvivo', 'thesis', this)">Thesis</button>
+                <button class="report-tab" onclick="showPanel('xvivo', 'valuation', this)">Valuation</button>
+                <button class="report-tab" onclick="showPanel('xvivo', 'catalysts', this)">Catalysts</button>
+                <button class="report-tab" onclick="showPanel('xvivo', 'risks', this)">Risks</button>
+            </div>
+            
+            <div id="xvivo-thesis" class="report-panel active">
+                <div class="thesis-box">
+                    <div class="thesis-headline">Binary catalyst play on FDA heart approval. Market overreacted to margin guidance noise — now breaking out with momentum into the catalyst window.</div>
+                    
+                    <div class="thesis-point">
+                        <div class="thesis-num">1</div>
+                        <div><strong>Heart is the real prize.</strong> Lung perfusion (current business) is mature. Heart transplant market is 5x larger. XVIVO has first-mover advantage with their XPS heart system. FDA approval could double the addressable market overnight.</div>
+                    </div>
+                    <div class="thesis-point">
+                        <div class="thesis-num">2</div>
+                        <div><strong>Clinical data is strong.</strong> US heart trial showed 95% patient survival at 30 days vs. ~85% historical average with standard cold storage. ISHLT conference in April will showcase this to the transplant community.</div>
+                    </div>
+                    <div class="thesis-point">
+                        <div class="thesis-num">3</div>
+                        <div><strong>Lung recovery underappreciated.</strong> Q4 showed procedure volumes bouncing back after a weak H1. Market is still extrapolating old data. Consensus growth estimates are too low.</div>
+                    </div>
+                    <div class="thesis-point">
+                        <div class="thesis-num">4</div>
+                        <div><strong>Technical breakout confirms thesis.</strong> Stock broke above 260 resistance with volume. Reclaimed all major moving averages. Institutions are accumulating ahead of catalysts.</div>
+                    </div>
+                </div>
+                
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--accent);margin:32px 0 16px;">Company Overview</h3>
+                <p>XVIVO is a Swedish medtech company specializing in organ perfusion — keeping donated organs viable outside the body before transplantation. Their XPS system pumps warm, oxygenated solution through donor lungs, extending preservation from ~6 hours to 24+ hours and allowing surgeons to assess quality before transplanting.</p>
+                <p>They dominate lung perfusion with ~70% market share. The growth story is <strong>heart</strong> — where the unmet need is massive. Heart transplants are limited by 4-6 hour preservation windows with current ice-box methods. XVIVO's technology could unlock hundreds of additional transplants per year.</p>
+            </div>
+            
+            <div id="xvivo-valuation" class="report-panel">
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--accent);margin-bottom:24px;">Valuation Analysis</h3>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">EV/EBITDA 2026e</div>
+                        <div class="metric-value">33x</div>
+                        <div class="metric-note">Premium justified by heart optionality</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Revenue Growth 2026e</div>
+                        <div class="metric-value">+22%</div>
+                        <div class="metric-note green">Accelerating from lung recovery</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Net Cash Position</div>
+                        <div class="metric-value">SEK 172m</div>
+                        <div class="metric-note green">No dilution risk</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">YTD Performance</div>
+                        <div class="metric-value">+48%</div>
+                        <div class="metric-note green">Outperforming sector by 30pp</div>
+                    </div>
+                </div>
+                
+                <p style="margin-top:24px;"><strong>Valuation Framework:</strong> I value XVIVO on a sum-of-parts basis. The core lung business is worth ~200 SEK/share on a DCF (10% WACC, 3% terminal growth). The heart option adds 80-120 SEK depending on approval probability. At 277, the market prices ~60% probability of FDA success — I think it's higher given the clinical data.</p>
+            </div>
+            
+            <div id="xvivo-catalysts" class="report-panel">
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--accent);margin-bottom:24px;">Catalyst Timeline</h3>
+                
+                <div class="catalyst-item">
+                    <div class="catalyst-date">
+                        <div class="catalyst-date-main">April 2026</div>
+                        <div class="catalyst-date-sub">ISHLT Conference</div>
+                    </div>
+                    <div class="catalyst-content">
+                        <h5>US Heart Clinical Data Presentation</h5>
+                        <p>Full results from the US heart trial presented to the transplant community. Strong data could drive physician interest and build anticipation for FDA submission.</p>
+                    </div>
+                </div>
+                <div class="catalyst-item">
+                    <div class="catalyst-date">
+                        <div class="catalyst-date-main">Q2 2026</div>
+                        <div class="catalyst-date-sub">Regulatory</div>
+                    </div>
+                    <div class="catalyst-content">
+                        <h5>FDA Heart PMA Submission</h5>
+                        <p>Pre-market approval application filed. This removes execution risk and starts the 180-day review clock. Typically a positive catalyst.</p>
+                    </div>
+                </div>
+                <div class="catalyst-item">
+                    <div class="catalyst-date">
+                        <div class="catalyst-date-main">Summer 2026</div>
+                        <div class="catalyst-date-sub">Europe</div>
+                    </div>
+                    <div class="catalyst-content">
+                        <h5>European Heart CE Mark</h5>
+                        <p>CE mark expected ahead of FDA. Allows European commercial launch and generates real-world evidence supporting the US application.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="xvivo-risks" class="report-panel">
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--accent);margin-bottom:24px;">Risk Factors</h3>
+                
+                <div class="risk-grid">
+                    <div class="risk-item">
+                        <h5>FDA Delay or Rejection</h5>
+                        <p>Heart approval is not guaranteed. Regulatory setbacks could send the stock back to 200 SEK. This is a binary risk that cannot be hedged.</p>
+                    </div>
+                    <div class="risk-item">
+                        <h5>Valuation Risk</h5>
+                        <p>At 33x EV/EBITDA, expectations are high. Any miss on growth or delays will be punished severely.</p>
+                    </div>
+                    <div class="risk-item">
+                        <h5>Competition</h5>
+                        <p>Transmedics has a competitive heart product. First-mover advantage matters but isn't insurmountable.</p>
+                    </div>
+                    <div class="risk-item">
+                        <h5>FX Headwind</h5>
+                        <p>~60% of revenue is USD-denominated. A strong SEK reduces reported growth by ~10% currently.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bottom-line">
+                <h4>Bottom Line</h4>
+                <p>XVIVO is a high-conviction position going into the ISHLT catalyst. The technical breakout above 260 confirms institutional buying. Risk/reward is attractive: 16% upside to target with multiple near-term catalysts. This is a binary medtech play — size position accordingly. I'm holding through April data presentation.</p>
+            </div>
+            
+            <p style="text-align:center;color:var(--text-light);font-size:13px;margin-top:48px;font-style:italic;">Personal research only. Not investment advice. See full Munters analysis below.</p>
+            
+            <!-- Add more stock reports here -->
+            
+        </div>
+        
+        <!-- =========================== SHIPPING =========================== -->
+        <div id="shipping-content" class="tab-content">
+            
+            <div class="shipping-hero">
+                <h3>Shipping Market Analysis</h3>
+                <p>Clean tanker markets are having their best month ever. Here's my breakdown of what's driving rates and where the opportunities are.</p>
+                <div class="shipping-date">UPDATED APRIL 10, 2026</div>
+            </div>
+            
+            <div class="narrative">
+                <h4>What's Happening in Tanker Markets?</h4>
+                <p>Product tankers are experiencing a historic moment. To understand why, you need to understand the key dynamic: <strong>it's not about how much oil moves — it's about how far it travels.</strong></p>
+                <p>Daily loadings are actually <em>down</em> 2.7 million barrels per day versus pre-disruption levels. But West-to-East trade (Atlantic to Asia) has surged from 2 million bpd to 3+ million bpd. A cargo from Houston to Singapore takes 3x longer than one from the Middle East. Same barrels, 3x the ships needed.</p>
+                <p><strong>Tonne-miles are up 3% YoY</strong> even though volumes are down. That's why spot rates are at all-time highs. And if the Middle East situation normalizes? Expect a scramble as charterers race to reposition — another rate spike.</p>
+            </div>
+            
+            <h4 style="font-size:18px;font-weight:600;color:var(--accent);margin-bottom:20px;">Current Spot Rates (April 10, 2026)</h4>
+            <table class="rate-table">
+                <thead>
+                    <tr><th>Vessel Type</th><th>Size</th><th>Rate ($/day)</th><th>WoW Change</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="rate-name">VLCC</span><br><span class="rate-size">TD3_C MEG-China</span></td>
+                        <td>270k dwt</td>
+                        <td class="rate-value">$455,900</td>
+                        <td class="rate-change down">▼ 12.3%</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rate-name">LR2</span><br><span class="rate-size">TC1 MEG-Japan</span></td>
+                        <td>110k dwt</td>
+                        <td class="rate-value">$122,700</td>
+                        <td class="rate-change up">▲ 11.0%</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rate-name">MR (West)</span><br><span class="rate-size">TC2 UKC-USAC</span></td>
+                        <td>50k dwt</td>
+                        <td class="rate-value">$99,900</td>
+                        <td class="rate-change up">▲ 2.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="narrative">
+                <h4>Why Clean Products Outperform Crude</h4>
+                <p>VLCCs are correcting from extreme highs, but clean product tankers (LR2, MR) keep strengthening. The reason: <strong>refinery geography doesn't match consumption</strong>. You can't just reroute crude — refined products must ship from Asian/Middle East export refineries to European and American demand centers. The trade lanes are structurally longer.</p>
+            </div>
+            
+            <h4 style="font-size:20px;font-weight:600;color:var(--accent);margin:40px 0 24px;text-align:center;">Stock Recommendations</h4>
+            <div class="picks-grid">
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div>
+                            <div class="pick-ticker">STNG</div>
+                            <div class="pick-name">Scorpio Tankers</div>
+                        </div>
+                        <div class="pick-rating">BUY</div>
+                    </div>
+                    <div class="pick-prices">
+                        <div><div class="pick-price-label">Current</div><div class="pick-price-value">$76</div></div>
+                        <div><div class="pick-price-label">Target</div><div class="pick-price-value target">$91</div></div>
+                    </div>
+                    <div class="pick-upside">+19% upside to target</div>
+                    <div class="pick-thesis"><strong>Top pick.</strong> Largest pure-play product tanker fleet (97 vessels). Trading at 0.79x NAV and sub-4x EV/EBITDA. Q2 consensus is 73% below our estimates — massive earnings surprise potential.</div>
+                </div>
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div>
+                            <div class="pick-ticker">HAFNI</div>
+                            <div class="pick-name">Hafnia Limited</div>
+                        </div>
+                        <div class="pick-rating">BUY</div>
+                    </div>
+                    <div class="pick-prices">
+                        <div><div class="pick-price-label">Current</div><div class="pick-price-value">$7.8</div></div>
+                        <div><div class="pick-price-label">Target</div><div class="pick-price-value target">$9.0</div></div>
+                    </div>
+                    <div class="pick-upside">+15% upside to target</div>
+                    <div class="pick-thesis"><strong>Yield play.</strong> 14% dividend yield with only 21% leverage. Largest product tanker company by vessel count. Diversified across LR2/LR1/MR segments.</div>
+                </div>
+            </div>
+            
+            <div class="bottom-line" style="margin-top:40px;">
+                <h4>Investment View</h4>
+                <p>Clean tankers are in a goldilocks scenario: volumes down but tonne-miles up, rates at records, consensus still too conservative. STNG for rate leverage, HAFNI/TORM for yield. A 5% rise in asset values (probable given newbuild prices) adds another 7-10% upside. Tail risks are real (war escalation, $120 oil) but positioning favors bulls.</p>
+            </div>
+            
+        </div>
+        
+    </div>
+</section>
+
+<section class="skills-section" id="skills">
+    <div class="container">
+        <h2>Technical Skills</h2>
+        <div class="section-line"></div>
+        <div class="skills-grid">
+            <div class="skill-group"><h4>Languages</h4><ul><li>Python</li><li>SQL</li><li>R</li><li>MATLAB</li><li>VBA</li></ul></div>
+            <div class="skill-group"><h4>Data & Analytics</h4><ul><li>Pandas / NumPy</li><li>Scikit-learn</li><li>Excel (Advanced)</li><li>Power BI</li></ul></div>
+            <div class="skill-group"><h4>Finance</h4><ul><li>Factor Models</li><li>Backtesting</li><li>Time Series</li><li>Shipping Markets</li></ul></div>
+            <div class="skill-group"><h4>Tools</h4><ul><li>Git / GitHub</li><li>Bloomberg</li><li>TradingView</li><li>PostgreSQL</li></ul></div>
+        </div>
+    </div>
+</section>
+
+<section class="contact" id="contact">
+    <div class="container">
+        <h2>Let's Connect</h2>
+        <p style="color:var(--text-light);max-width:500px;margin:0 auto;">Open to opportunities in shipping, commodity trading, and quantitative finance. On exchange in Singapore until May 2026.</p>
+        <div class="contact-links">
+            <a href="mailto:bhutta.mikael@gmail.com" class="contact-link primary">Get in Touch</a>
+            <a href="https://linkedin.com/in/mikaelbhutta" class="contact-link secondary" target="_blank">LinkedIn</a>
+            <a href="https://github.com/mikemode04" class="contact-link secondary" target="_blank">GitHub</a>
+        </div>
+    </div>
+</section>
+
+<footer><div class="container"><p>© 2026 Mikael Bhutta</p></div></footer>
+
+<script>
+// ========== FIXED TAB NAVIGATION ==========
+function showTab(tabName, clickedBtn) {
+    // Remove active from all tab buttons
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+    
+    // Remove active from all tab content
+    document.querySelectorAll('.tab-content').forEach(function(content) {
+        content.classList.remove('active');
+    });
+    
+    // Add active to clicked button
+    clickedBtn.classList.add('active');
+    
+    // Add active to corresponding content
+    document.getElementById(tabName + '-content').classList.add('active');
+}
+
+// ========== FIXED REPORT PANEL NAVIGATION ==========
+function showPanel(report, panel, clickedBtn) {
+    // Find the parent report section
+    var reportHeader = clickedBtn.closest('.report-tabs') || clickedBtn.parentElement;
+    var container = reportHeader.parentElement;
+    
+    // Remove active from all tabs in this report
+    reportHeader.querySelectorAll('.report-tab').forEach(function(tab) {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active from all panels in this report
+    container.querySelectorAll('.report-panel').forEach(function(p) {
+        p.classList.remove('active');
+    });
+    
+    // Add active to clicked tab
+    clickedBtn.classList.add('active');
+    
+    // Add active to corresponding panel
+    document.getElementById(report + '-' + panel).classList.add('active');
+}
+</script>
+
+</body>
+</html>
